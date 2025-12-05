@@ -3,11 +3,16 @@ import 'package:my_mvvm/app/utils.dart';
 import 'package:stacked/stacked.dart';
 
 class SplashViewModel extends BaseViewModel {
-  init() {
+  init() async {
+    var user = await userservice.getUser() ?? null;
     // code to navigate to  next screen
     Future.delayed(Duration(seconds: 3), () {
-      //navigationService.navigateTo(Routes.loginview);
-      // navigationService.pushNamedAndRemoveUntil(Routes.loginview);
+      user == null
+          ? navigationService.navigateTo(Routes.loginview)
+          : navigationService.navigateTo(
+              Routes.homeview,
+              arguments: HomeviewArguments(user: user),
+            );
     });
   }
 }

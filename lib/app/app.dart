@@ -1,4 +1,5 @@
 import 'package:my_mvvm/services/db_service.dart';
+import 'package:my_mvvm/ui/screens/home/homeview.dart';
 import 'package:my_mvvm/ui/screens/login/loginview.dart';
 import 'package:my_mvvm/ui/screens/splash/splashview.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -11,6 +12,7 @@ import '../services/user_service.dart';
   routes: [
     MaterialRoute(page: Splashview, initial: true),
     MaterialRoute(page: Loginview),
+    MaterialRoute(page: Homeview),
   ],
   dependencies: [
     LazySingleton(classType: ApiService),

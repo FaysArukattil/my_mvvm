@@ -1,4 +1,3 @@
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 // These are the Viewport values of your Figma Design.
@@ -6,29 +5,31 @@ import 'package:flutter/material.dart';
 const num FIGMA_DESIGN_WIDTH = 360;
 const num FIGMA_DESIGN_HEIGHT = 892;
 const num FIGMA_DESIGN_STATUS_BAR = 0;
-typedef ResponsiveBuild = Widget Function(
-  BuildContext context,
-  Orientation orientation,
-  DeviceType deviceType,
-);
+typedef ResponsiveBuild =
+    Widget Function(
+      BuildContext context,
+      Orientation orientation,
+      DeviceType deviceType,
+    );
 
 class Sizer extends StatelessWidget {
-  const Sizer({
-    Key? key,
-    required this.builder,
-  }) : super(key: key);
+  const Sizer({Key? key, required this.builder}) : super(key: key);
 
   /// Builds the widget whenever the orientation changes.
   final ResponsiveBuild builder;
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return OrientationBuilder(builder: (context, orientation) {
-        SizeUtils.setScreenSize(constraints, orientation);
-        return builder(context, orientation, SizeUtils.deviceType);
-      });
-    });
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return OrientationBuilder(
+          builder: (context, orientation) {
+            SizeUtils.setScreenSize(constraints, orientation);
+            return builder(context, orientation, SizeUtils.deviceType);
+          },
+        );
+      },
+    );
   }
 }
 
@@ -60,12 +61,14 @@ class SizeUtils {
 
     // Sets screen width and height
     if (orientation == Orientation.portrait) {
-      width =
-          boxConstraints.maxWidth.isNonZero(defaultValue: FIGMA_DESIGN_WIDTH);
+      width = boxConstraints.maxWidth.isNonZero(
+        defaultValue: FIGMA_DESIGN_WIDTH,
+      );
       height = boxConstraints.maxHeight.isNonZero();
     } else {
-      width =
-          boxConstraints.maxHeight.isNonZero(defaultValue: FIGMA_DESIGN_WIDTH);
+      width = boxConstraints.maxHeight.isNonZero(
+        defaultValue: FIGMA_DESIGN_WIDTH,
+      );
       height = boxConstraints.maxWidth.isNonZero();
     }
     deviceType = DeviceType.mobile;

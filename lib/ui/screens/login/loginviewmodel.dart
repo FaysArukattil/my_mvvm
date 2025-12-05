@@ -11,7 +11,7 @@ class LoginviewModel extends BaseViewModel {
   User? user;
   String? validateEmail() {
     var value = usernamectlr.text;
-    if (value == null || value.isEmpty) {
+    if (value.isEmpty) {
       return 'Email is required';
     }
 
@@ -29,18 +29,31 @@ class LoginviewModel extends BaseViewModel {
   init() {
     // code to navigate to  next screen
   }
-  Future<void> login() async {
-    if (formkey.currentState!.validate()) {
-      user = await apiservice.login(
-        email: usernamectlr.text,
-        password: password.text,
-      );
-      if (user != null) {
-        // navigationService.navigateTo(
-        //   Routes.homeview,
-        //   arguments: HomeviewArguments(username: user!.name!),
-        // );
+  Future<bool?> login() async {
+    if (!formkey.currentState!.validate()) {
+      return false;
+    } else {
+      setBusy(true);
+      try {
+        user = await apiservice.login(
+          email: usernamectlr.text.trim(),
+          password: password.text.trim(),
+        );
+      } catch (e) {
+        debugPrint("login error:::${e.toString()}");
+      } finally {
+        setBusy(false);
       }
+
+      if (user != null) {
+        await userservice.saveUser(user!);
+        navigationService.navigateTo(
+          Routes.homeview,
+          arguments: HomeviewArguments(user: user!),
+        );
+        return true;
+      }
+      false;
     }
   }
 }
