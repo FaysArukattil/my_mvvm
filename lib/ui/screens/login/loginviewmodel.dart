@@ -26,7 +26,7 @@ class LoginviewModel extends BaseViewModel {
     return null; // valid email
   }
 
-  init() {
+  void init() {
     // code to navigate to  next screen
   }
   Future<bool?> login() async {
@@ -55,5 +55,6 @@ class LoginviewModel extends BaseViewModel {
       }
       false;
     }
+    return null;
   }
 }

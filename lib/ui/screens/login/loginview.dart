@@ -69,7 +69,7 @@ class Loginview extends StatelessWidget {
                 SizedBox(height: 10),
                 TextFormField(
                   validator: (v) {
-                    return v!.length == 0 ? "must fill password" : null;
+                    return v!.isEmpty ? "must fill password" : null;
                   },
                   obscureText: true,
                   controller: viewModel.password,
@@ -88,19 +88,19 @@ class Loginview extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 24),
-                Container(
+                SizedBox(
                   width: ScreenSize.width,
                   height: ScreenSize.buttonheight,
                   child: ElevatedButton(
                     onPressed: () {
                       viewModel.login();
                     },
-                    child: Text("Login"),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(),
                       backgroundColor: Colors.blue,
                       foregroundColor: Colors.white,
                     ),
+                    child: Text("Login"),
                   ),
                 ),
                 Row(
